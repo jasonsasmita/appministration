@@ -1,8 +1,6 @@
 import React from 'react'
-import { connectToDB } from '../mongoose'
 
-
-const MenuSection = () => {
+const CardMenu = () => {
   return (
     <div className='m-auto py-5'>
         <h1>Test</h1>
@@ -10,4 +8,4 @@ const MenuSection = () => {
   )
 }
 
-export default MenuSection
+export default CardMenu
