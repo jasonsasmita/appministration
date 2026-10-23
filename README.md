@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Appministration
 
-## Getting Started
+A small central hub for sharing and discovering projects made by creators.
 
-First, run the development server:
+## Pages
+
+- `/` — landing page with a galaxy-inspired CSS background.
+- `/projects` — searchable, category-filtered project grid with pagination.
+- `/<creator-username>/<project-slug>` — project detail with gallery, description, and resource links.
+- `/menus` — permanent redirect to `/projects`.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project data
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The app reads from local dummy data by default:
 
-## Learn More
+- `lib/projects/types.ts` — domain types and category constants.
+- `lib/projects/dummy-data.ts` — the dummy project catalog.
+- `lib/projects/dummy-repository.ts` — search, filtering, and pagination.
+- `lib/projects/repository.ts` — the `ProjectRepository` interface and source switch.
 
-To learn more about Next.js, take a look at the following resources:
+MongoDB support is prepared but inactive. The Mongoose model and repository live in
+`lib/projects/mongo-model.ts` and `lib/projects/mongo-repository.ts`. To use them:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Set `DB_URI` and `PROJECTS_SOURCE=mongo` in `.env`.
+2. Seed the `projects` collection with documents matching `ProjectRecord`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+No database connection is attempted while `PROJECTS_SOURCE` is unset.
 
-## Deploy on Vercel
+## Project images
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Placeholder artwork is committed in `public/images/projects`. To regenerate it:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm run generate:images
+```
+
+The script uses the Sharp installation already available through Next.js.
+
+## Scripts
+
+```bash
+npm run lint
+npm run build
+npm run start
+```
